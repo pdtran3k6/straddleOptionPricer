@@ -1,0 +1,33 @@
++------------------------------------------------------------------------------------+
+|                               Constant Timestepping                                |
++-------+-----------+-------------------+------------------------+-------------------+
+| Nodes | Num Steps |       Value       |         Change         |       Ratio       |
++-------+-----------+-------------------+------------------------+-------------------+
+|   63  |     25    | 98.68588432046444 |                        |                   |
+|  125  |     50    | 98.68426298733402 | 0.0016213331304157919  |                   |
+|  249  |    100    | 98.68385550600966 | 0.00040748132435908246 | 3.978913961188154 |
+|  497  |    200    | 98.68375446455508 | 0.0001010414545845606  | 4.032813324337739 |
+|  993  |    400    | 98.68372954698233 | 2.491757274469819e-05  | 4.055027976433202 |
++-------+-----------+-------------------+------------------------+-------------------+
++------------------------------------------------------------------------------------+
+|                               Variable Timestepping                                |
++-------+-----------+-------------------+------------------------+-------------------+
+| Nodes | Num Steps |       Value       |         Change         |       Ratio       |
++-------+-----------+-------------------+------------------------+-------------------+
+|   63  |     26    |  98.685759654931  |                        |                   |
+|  125  |     58    | 98.68421062659456 | 0.0015490283364414381  |                   |
+|  249  |    119    | 98.68384222098534 | 0.00036840560922257737 | 4.204681735737555 |
+|  497  |    242    | 98.68375171463715 | 9.050634818663639e-05  | 4.070494684669797 |
+|  993  |    486    | 98.68372912290761 | 2.2591729546661554e-05 | 4.006171727565266 |
++-------+-----------+-------------------+------------------------+-------------------+
+
+In theory, Constant Timestepping does not suppose to converge quadratically, Variable Timestepping does.
+However, we can see that both seems to converge quadratically. This could be due to floating point errors. 
+The number of steps for Variable Timestepping also roughly doubles as expected since we reduce our dnorm by 
+2 every iteration.
+
+For the delta plots, both plots look almost identical, even though each uses a different timestepping 
+mechanism. This shows a really interesting point: despite having different option values at each timestep,
+the final option values (S=10, t=0) for both methods are similar. These 2 plots also look similar to the
+European option's delta plot: linear, with a slight curve at the beginning. For both European and American
+option, the deltas are quite similar, despite the difference in exercising mechanism. 
